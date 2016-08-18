@@ -1,0 +1,26 @@
+<html xmlns=”http://www.w3.org/1999/xhtml”>
+<head>
+    <title>Test</title>
+    <script language="javascript">
+        function t1(){
+            t1.age=18;//1.定义静态变量
+        }
+
+        function func() {
+
+            alert(new t1().age);//2.静态变量不能通过实例访问，输出undefined，然后在5处输出18
+            new t1().age=50;    //3.因为2，把50传入给undefined相当于什么都没做，但不会报错
+
+            //4.如果把2,3注释掉，5输出undefined，因为javascript中静态变量的访问需要new出实例后通过类名.变量名访问,new的目的是明确这是一个对象而不是一个变量
+            alert(t1.age);//5
+
+
+
+        }
+    </script>
+</head>
+<body>
+<p onClick="func();">Clikc Me</p>
+
+</body>
+</html>
