@@ -16,8 +16,6 @@ var GLOBAL={};
 
         }
     );
-    
-
 
     /*alert(vue.getIndex());*/
     /*$('tr').click(function () {
@@ -26,28 +24,6 @@ var GLOBAL={};
             alert(i);*!/
         }
     );*/
-
-
-    var menu = new BootstrapMenu('#demo1Box', {
-    menuEvent: 'click',
-    actions: [ {
-    name: '删除',
-    onClick: function () {
-    /*alert(vue.id);*/
-    vue.delete();
-    }
-    }]
-    });
-
-    var menu2 = new BootstrapMenu('#demo2Box', {
-    actions: [ {
-    name: '保存',
-    onClick: function () {
-    vue.save();       //调用vue的save方法
-    }
-    }]
-    });
-
 
     <input v-bind:value="item.delivery_date">
 
