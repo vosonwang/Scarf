@@ -7,17 +7,9 @@
  */
 session_start();
 
-header('content-type:text/html;charset=utf-8');
+require "../database/link.php";
 
-require_once '../database/mysql.func.php';
-require_once '../database/config.php';
-
-error_reporting(0);
-
-$link=connect2();
 $table='users';
-
-
 
 $un = $_POST[username];
 $pw = $_POST[password];

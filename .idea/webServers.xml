@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="79fbf0d9-a073-4939-b003-ae80e7197b33" name="Scarf" url="http://139.129.214.185">
+        <fileTransfer host="139.129.214.185" port="21" rootFolder="/default" password="dfdcdfc5dfd9dfc5dfc4df98df9adf9bdf9c" username="voson">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

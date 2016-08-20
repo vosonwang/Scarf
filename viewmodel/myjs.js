@@ -8,24 +8,27 @@ $(function () {
             delivery: {},
             new_delivery: [],
             id: "",
+            delete_arr:[],
             row: "",
             json: ''
         },
         ready: function () {
-
-            //获取数据库中的发货记录
-            var _self = this;
-            $.ajax({
-                type: 'GET',
-                url: '../controller/show.php',
-                success: function (data) {
-                    _self.delivery = JSON.parse(data);
-                }
-            });
-
-
+            this.show();
         },
         methods: {
+
+            //获取数据库中的发货记录
+            show:function () {
+                var _self=this;
+                $.ajax({
+                    type: 'GET',
+                    url: '../controller/show.php',
+                    success: function (data) {
+                        _self.delivery = JSON.parse(data);
+                    }
+                });
+            },
+
             insert: function () {
                 var _self = this;      //将this这个VM传给全局变量
 
@@ -60,8 +63,8 @@ $(function () {
                             url: '../controller/insert.php',
                             data: {json: _self.json},
                             success: function (msg) {
-                                console.log("保存成功:" + msg);
-                                location.reload();
+                                _self.show();
+                                _self.moverow();
                             }
                         });
                     }
@@ -74,17 +77,15 @@ $(function () {
 
             delete: function () {
                 var _self = this;
-                /*console.log(_self.id);*/
                 if (_self.id == "") {
                     alert("请先选择要删除的行!")
                 } else {
                     $.ajax({
                         type: 'POST',
                         url: '../controller/delete.php',
-                        data: {id: _self.id},
+                        data: {id:this.delete_arr},
                         success: function (msg) {
-                            console.log(msg);
-                            location.reload();
+                            _self.show();
                         }
                     })
                 }
@@ -93,50 +94,69 @@ $(function () {
 
 
             //这个方法有两个作用:1.提取被点击行的id,从而被delete方法调用,删除行。2.切换被点击行的css样式
-            dataClick: function (item) {
-
-                var new_click = "#i" + item.id;
-                var old_click = "#i" + this.id;
-
+            getId: function (item) {
                 this.id = item.id;    //获取被点击行的id
 
-                if (old_click == new_click) {                        //判断此地点击是否是点击在之前选中的行上,还是新的一行
-                    if ($(new_click).hasClass("table_hover")) {      //判断该行,之前是否是已经加上了选中效果
-                        $(new_click).removeClass("table_hover dataClick");
-                        this.id = "";
-                    } else {
-                        $(new_click).addClass("table_hover dataClick");
-
-                    }
+                var selector="#i" + this.id;
+                if ($(selector).hasClass("table_hover")) {      //判断该行,之前是否是已经加上了选中效果
+                    $(selector).removeClass("table_hover getId");
+                    this.delete_arr.remove(this.id);
                 } else {
-                    $(new_click).addClass("table_hover dataClick");
-                    $(old_click).removeClass("table_hover dataClick");
+                    $(selector).addClass("table_hover getId");
+                    this.delete_arr.push(this.id);
                 }
+
 
             },
 
             //增加行
             addrow: function () {
-                /*console.log(this.row);*/
 
                 $('#addrow_modal').modal('toggle');
+
+                //聚焦input框,没有效果
+                $('#rowno').focus();
+
+                //160818.4 给输入行数的input框，添加一个回车即等同按下按钮的事件
+                $('#rowno').keydown(function(e){
+                    if(e.keyCode==13){
+                        vue.addrow();
+                    }
+                });
                 if (this.row != "") {
                     for (var i = 0; i < parseInt(this.row); i++) {
                         this.new_delivery.$set(i, {});
                     }
                 }
-            }
+            },
 
-
+           moverow:function () {
+               /* console.log(this.new_delivery.length);*/
+               var i=0;
+                while (i<this.new_delivery.length){
+                    this.new_delivery.$remove(this.new_delivery[i]);
+                }
+           }
         }
+
+
     });
 
 
-    //160818.4 给输入行数的input框，添加一个回车即等同按下按钮的事件
-    $('#rowno').keydown(function(e){
-        if(e.keyCode==13){
-            vue.addrow();
+    //为数组创建一个方法,根据值返回数组下标
+    Array.prototype.indexOf = function(val) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i] == val) return i;
         }
-    });
+        return -1;
+    };
+
+    //为数组创建一个方法,根据返回值删除数组元素
+    Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+            this.splice(index, 1);
+        }
+    };
 
 });

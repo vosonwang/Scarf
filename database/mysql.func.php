@@ -1,4 +1,9 @@
 <?php
+
+/*
+ * 作者:http://www.cnblogs.com/4php/p/4106471.html
+ */
+
 /**
  * 连接MYSQL函数
  * @param string $host

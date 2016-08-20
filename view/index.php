@@ -22,36 +22,40 @@ require("../temple/header.html")
                 </tr>
                 </thead>
                 <tbody>
+                <template v-for="(index,item) in delivery">
+                    <tr v-on:click="getId(item)" id="i{{item.id}}">
+                        <th class="border text-center">{{index+1}}</th>
+                        <td>{{item.delivery_date}}</td>
+                        <td>{{item.pattern}}</td>
+                        <td>{{item.pieces}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.pieces*item.price}}</td>
+                        <td>{{item.packages}}</td>
+                        <td>{{item.consignee}}</td>
+                        <td>{{item.orders}}</td>
+                        <td>{{item.address}}</td>
+                    </tr>
+                </template>
 
-                <tr v-for="(index,item) in delivery" v-on:click="dataClick(item)" id="i{{item.id}}">
-                    <th class="border text-center">{{index+1}}</th>
-                    <td>{{item.delivery_date}}</td>
-                    <td>{{item.pattern}}</td>
-                    <td>{{item.pieces}}</td>
-                    <td>{{item.price}}</td>
-                    <td>{{item.pieces*item.price}}</td>
-                    <td>{{item.packages}}</td>
-                    <td>{{item.consignee}}</td>
-                    <td>{{item.orders}}</td>
-                    <td>{{item.address}}</td>
-                </tr>
-                <tr v-for="(index,item) in new_delivery">
-                    <td class="border"><input class="addRow" disabled="disabled" value="+"></td>
-                    <td><input class="addRow" name="delivery_date" v-model="item.delivery_date"
-                               pattern="^1[345678][0-9]{9}$"></td>
-                    <td><input class="addRow" type="text" name="pattern" v-model="item.pattern"></td>
-                    <td><input class="addRow" type="number" name="pieces" v-model="item.pieces"></td>
-                    <td><input class="addRow" type="number" name="price" v-model="item.price"></td>
-                    <td>
-                        <input class="addRow" type="number" name="amount" v-if="item.pieces!=''&&item.price!=''"
-                               value="{{item.pieces*item.price}}" disabled="disabled">
-                        <input class="addRow" type="number" name="amount" v-else value="" disabled="disabled">
-                    </td>
-                    <td><input class="addRow" type="number" name="packages" v-model="item.packages"></td>
-                    <td><input class="addRow" type="text" name="consignee " v-model="item.consignee"></td>
-                    <td><input class="addRow" type="text" name="orders" v-model="item.orders"></td>
-                    <td><input class="addRow" type="text" name="address" v-model="item.address"></td>
-                </tr>
+                <template v-for="(index,item) in new_delivery">
+                    <tr >
+                        <td class="border"><input class="addRow" disabled="disabled" value="+"></td>
+                        <td><input class="addRow" name="delivery_date" v-model="item.delivery_date"
+                                   pattern="^1[345678][0-9]{9}$"></td>
+                        <td><input class="addRow" type="text" name="pattern" v-model="item.pattern"></td>
+                        <td><input class="addRow" type="number" name="pieces" v-model="item.pieces"></td>
+                        <td><input class="addRow" type="number" name="price" v-model="item.price"></td>
+                        <td>
+                            <input class="addRow" type="number" name="amount" v-if="item.pieces!=''&&item.price!=''"
+                                   value="{{item.pieces*item.price}}" disabled="disabled">
+                            <input class="addRow" type="number" name="amount" v-else value="" disabled="disabled">
+                        </td>
+                        <td><input class="addRow" type="number" name="packages" v-model="item.packages"></td>
+                        <td><input class="addRow" type="text" name="consignee " v-model="item.consignee"></td>
+                        <td><input class="addRow" type="text" name="orders" v-model="item.orders"></td>
+                        <td><input class="addRow" type="text" name="address" v-model="item.address"></td>
+                    </tr>
+                </template>
                 </tbody>
             </table>
         </div>

@@ -1,13 +1,11 @@
 <?php
-header('content-type:text/html;charset=utf-8');
-require_once '../database/mysql.func.php';
-require_once '../database/config.php';
+require "../database/link.php";
 
-$link=connect2();
 $table='finishing';
 $t=$_POST[json];
 $array=json_decode($t);
 
+//将对象转化为数组
 function object_array($array){
     if(is_object($array)){
         $array = (array)$array;
