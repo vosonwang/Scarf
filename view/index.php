@@ -22,14 +22,14 @@ require("../temple/header.html")
                 </tr>
                 </thead>
                 <tbody>
-                <template v-for="(index,item) in delivery">
+                <template v-for="(index,item) in deliveries">
                     <tr v-on:click="getId(item)" id="i{{item.id}}">
                         <th class="border text-center">{{index+1}}</th>
                         <td>{{item.delivery_date}}</td>
                         <td>{{item.pattern}}</td>
                         <td>{{item.pieces}}</td>
                         <td>{{item.price}}</td>
-                        <td>{{item.pieces*item.price}}</td>
+                        <td>{{item.price*item.pieces}}</td>
                         <td>{{item.packages}}</td>
                         <td>{{item.consignee}}</td>
                         <td>{{item.orders}}</td>
@@ -37,8 +37,8 @@ require("../temple/header.html")
                     </tr>
                 </template>
 
-                <template v-for="(index,item) in new_delivery">
-                    <tr >
+                <template v-for="(index,item) in new_deliveries">
+                    <tr>
                         <td class="border"><input class="addRow" disabled="disabled" value="+"></td>
                         <td><input class="addRow" name="delivery_date" v-model="item.delivery_date"
                                    pattern="^1[345678][0-9]{9}$"></td>
@@ -46,9 +46,9 @@ require("../temple/header.html")
                         <td><input class="addRow" type="number" name="pieces" v-model="item.pieces"></td>
                         <td><input class="addRow" type="number" name="price" v-model="item.price"></td>
                         <td>
-                            <input class="addRow" type="number" name="amount" v-if="item.pieces!=''&&item.price!=''"
-                                   value="{{item.pieces*item.price}}" disabled="disabled">
-                            <input class="addRow" type="number" name="amount" v-else value="" disabled="disabled">
+                            <input class="addRow"  name="amount" v-if="item.price!=null&&item.pieces!=null" value="{{item.pieces*item.price}}" disabled="disabled">
+
+                            <input class="addRow" name="amount" v-else disabled="disabled">
                         </td>
                         <td><input class="addRow" type="number" name="packages" v-model="item.packages"></td>
                         <td><input class="addRow" type="text" name="consignee " v-model="item.consignee"></td>
@@ -62,7 +62,7 @@ require("../temple/header.html")
         <div class="col-xs-12">
             <button class="btn btn-default" type="submit" @click="insert">保存</button>
             <button class="btn btn-default" type="submit" @click="delete">删除</button>
-            <button class="btn btn-default" type="submit" @click="addrow">增加</button>
+            <button class="btn btn-default" type="submit" @click="showmodal">增加</button>
         </div>
     </div>
 
