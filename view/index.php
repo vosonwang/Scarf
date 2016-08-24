@@ -22,14 +22,15 @@ require("../temple/header.html")
                 </tr>
                 </thead>
                 <tbody>
-                <template v-for="(index,item) in deliveries">
+                <template v-for="(index,item) in deliveries | orderBy 'sequence' ">
                     <tr v-on:click="getId(item)" id="i{{item.id}}">
-                        <th class="border text-center">{{index+1}}</th>
+                        <th class="border text-center change_to_add" ">{{index+1}}</th>
                         <td>{{item.delivery_date}}</td>
                         <td>{{item.pattern}}</td>
                         <td>{{item.pieces}}</td>
                         <td>{{item.price}}</td>
-                        <td>{{item.price*item.pieces}}</td>
+                        <td v-if="item.price!=null&&item.pieces!=null&&item.price!=''&&item.pieces!=''">{{item.price*item.pieces}}</td>
+                        <td v-else></td>
                         <td>{{item.packages}}</td>
                         <td>{{item.consignee}}</td>
                         <td>{{item.orders}}</td>
@@ -37,17 +38,17 @@ require("../temple/header.html")
                     </tr>
                 </template>
 
-                <template v-for="(index,item) in new_deliveries">
+                <template v-for="(index,item) in new_deliveries ">
                     <tr>
-                        <td class="border"><input class="addRow" disabled="disabled" value="+"></td>
-                        <td><input class="addRow" name="delivery_date" v-model="item.delivery_date"
-                                   pattern="^1[345678][0-9]{9}$"></td>
+                        <td class="border">
+                            <input class="addRow" disabled="disabled" value="+">
+                        </td>
+                        <td><input class="addRow" name="delivery_date" v-model="item.delivery_date"></td>
                         <td><input class="addRow" type="text" name="pattern" v-model="item.pattern"></td>
                         <td><input class="addRow" type="number" name="pieces" v-model="item.pieces"></td>
                         <td><input class="addRow" type="number" name="price" v-model="item.price"></td>
                         <td>
-                            <input class="addRow"  name="amount" v-if="item.price!=null&&item.pieces!=null" value="{{item.pieces*item.price}}" disabled="disabled">
-
+                            <input class="addRow"  name="amount" v-if="item.price!=null&&item.pieces!=null&&item.price!=''&&item.pieces!=''" value="{{item.pieces*item.price}}" disabled="disabled">
                             <input class="addRow" name="amount" v-else disabled="disabled">
                         </td>
                         <td><input class="addRow" type="number" name="packages" v-model="item.packages"></td>
@@ -92,7 +93,6 @@ require("../temple/header.html")
             </div>
         </div>
     </div>
-
 
 </div>
 

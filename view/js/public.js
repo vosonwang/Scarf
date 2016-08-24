@@ -27,3 +27,26 @@ function objLength(obj){
     }
     return count;
 }
+
+
+//根据id计算数组-对象中的其他属性
+function arrObj(id,property,arrObj){
+    var attr;
+    $.each(arrObj, function (index, value) {
+        if (value.id == id) {
+            attr = value[property];
+            return false;
+        }
+    });
+    return attr;
+}
+
+//计算小数点后面的位数
+function getDecimal(D) {    //这里的D是一个小数字符串,比如"2.1"
+    if(D%1 === 0){
+        return 0
+    }else {
+        return D.split(".")[1].length;
+    }
+
+}

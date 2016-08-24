@@ -1,4 +1,17 @@
 
+0824
+  // 一步定义和注册
+    Vue.component('my-component', {
+
+    });
+
+
+
+0823
+
+    //聚焦input框,没有效果
+    $('#rowno').focus();
+
 
 
 <input  name="amount" disabled="disabled" v-if="new_deliveries.price=''|| new_deliveries.pieces!=''" value="" lazy>
