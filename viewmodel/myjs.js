@@ -81,6 +81,7 @@ $(function () {
                         success: function (msg) {
                             _self.show();
                             _self.delete_arr = [];
+                            _self.id=""
                         }
                     })
                 }
