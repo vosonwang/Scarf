@@ -9,10 +9,9 @@ $(function () {
         data: {
             id: "",               //每条发货记录在数据库中的Id
             row: "",              //用户输入的增加行数
-            deliveries: {},       //从数据库中提取的发货记录
+            deliveries: [],       //从数据库中提取的发货记录
             new_deliveries: [],     //新增发货记录的数组
-            delete_arr: [],           //等待删除的发货记录数组
-            k: []
+            delete_arr: []         //等待删除的发货记录数组
         },
         ready: function () {
             this.show();
@@ -26,7 +25,7 @@ $(function () {
                     type: 'GET',
                     url: '../controller/show.php',
                     success: function (data) {
-                        if(JSON.parse(data)){
+                        if (JSON.parse(data)) {
                             _self.deliveries = JSON.parse(data);
                         }
                     }
@@ -63,7 +62,7 @@ $(function () {
                         success: function (msg) {
                             _self.moverow();
                             _self.show();
-                            _self.new_deliveries=[];
+                            _self.new_deliveries = [];
                         }
                     });
                 }
@@ -81,7 +80,7 @@ $(function () {
                         data: {id: this.delete_arr},
                         success: function (msg) {
                             _self.show();
-                            _self.delete_arr=[];
+                            _self.delete_arr = [];
                         }
                     })
                 }
@@ -108,7 +107,7 @@ $(function () {
 
             showmodal: function () {
                 $('#addrow_modal').modal('show');   //打开增加行数的模态框
-                this.delete_arr=[];
+                this.delete_arr = [];
             },
 
             //增加行
@@ -117,21 +116,20 @@ $(function () {
                 var _self = this;
                 var N = this.new_deliveries;
 
-                if (objLength(N) != 0) {
+                if (N.length != 0) {
                     this.insert();
                 }
                 if (_self.row != "") {        //判断输入的行数是否为空
                     for (var i = 0; i < parseInt(_self.row); i++) {
                         this.new_deliveries.$set(i, {});
                     }
+                    _self.changeSequence();
                 }
 
                 $('#addrow_modal').modal('hide');//打开增加行数的模态框
 
+                _self.id = "";
 
-                _self.changeSequence();
-
-                _self.id="";
             },
 
             moverow: function () {
@@ -144,21 +142,40 @@ $(function () {
 
             changeSequence: function () {
                 var _self = this;
-                var D_ob = this.deliveries;
-                var SQ = "";
-                var N_arr = this.new_deliveries;
-                
-                for (var i = 0; i < parseInt(_self.row); i++) {
-                    if (_self.id != "") {   //判断是否选中了元素
-                        SQ = arrObj(_self.id, "sequence", _self.deliveries);    //获取被选中的行的序号
-                        N_arr[i].sequence = String(parseFloat(SQ) + (1/Math.pow(10,getDecimal(SQ)+1)) * (i + 1))
+                var D = this.deliveries;
+                var N = this.new_deliveries;
 
+                if (_self.id != "") {   //判断是否选中了元素
+                    var left = parseFloat(arrObjProp(_self.id, "sequence", D));    //获取被选中的行在现有发货记录中的序号
+                    if (D.length != 0) {
+                        var index = arrObjIndex(_self.id, D);       //获取被选中元素在现有发货记录中的索引
+                        if(index==(--D.length)){
+                            var last = D[D.length - 1].sequence;
+                            for (var i = 0; i < _self.row; i++) {
+                                N[i].sequence = String(parseFloat(last) + i + 1);
+                            }
+                        }else{
+                            var right = parseFloat(D[index + 1].sequence);
+                            division(left, right, parseFloat(_self.row));
+                            for (var i = 0; i < _self.row; i++) {
+                                N[i].sequence = arr[i];
+                            }
+                        }
+                    }else{
+                        for (var i = 0; i < _self.row; i++) {
+                            N[i].sequence = String(i++);
+                        }
+                    }
+
+                } else {
+                    if (D.length != 0) {    //判断原先是否存在发货记录
+                        var last = D[D.length - 1].sequence;
+                        for (var i = 0; i < _self.row; i++) {
+                            N[i].sequence = String(parseFloat(last) + i + 1);
+                        }
                     } else {
-                        if (objLength(D_ob) != 0) {    //判断原先是否存在发货记录
-                            var last = D_ob[objLength(D_ob) - 2].sequence;
-                            N_arr[i].sequence = String(parseFloat(last) +  i + 1)
-                        } else {
-                            N_arr[i].sequence = String(i + 1)
+                        for (var i = 0; i < _self.row; i++) {
+                            N[i].sequence = String(i);
 
                         }
 
@@ -180,11 +197,5 @@ $(function () {
             vue.addrow();
         }
     });
-
-
-    /*$("tbody").on('onmouseover','.change_to_add',function () {
-     alert(3)
-     })*/
-
 
 });

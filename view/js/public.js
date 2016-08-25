@@ -20,7 +20,7 @@ Array.prototype.remove = function (val) {
 };
 
 //计算对象的长度
-function objLength(obj){
+function objLength(obj) {
     var count = 0;
     for (var i in obj) {
         count++;
@@ -30,7 +30,7 @@ function objLength(obj){
 
 
 //根据id计算数组-对象中的其他属性
-function arrObj(id,property,arrObj){
+function arrObjProp(id, property, arrObj) {
     var attr;
     $.each(arrObj, function (index, value) {
         if (value.id == id) {
@@ -41,12 +41,42 @@ function arrObj(id,property,arrObj){
     return attr;
 }
 
+//根据id计算数组-对象中的其他属性
+function arrObjIndex(id, arrObj) {
+    var key;
+    $.each(arrObj, function (index, value) {
+        if (value.id == id) {
+            key = index;
+            return false;
+        }
+    });
+    return key;
+}
+
+
+
 //计算小数点后面的位数
 function getDecimal(D) {    //这里的D是一个小数字符串,比如"2.1"
-    if(D%1 === 0){
+    if (D % 1 === 0) {
         return 0
-    }else {
-        return D.split(".")[1].length;
+    } else {
+        return D.split(".")[1].length;  //不加return 会陷在递归里，返回undefined
     }
 
 }
+
+var arr=[];
+//用二分法、递归得到插值要用的序号，但是arr无法在内部实现申明
+function division(left, right, N) {
+    var middle = (left + right) / 2;
+    arr.push(middle);
+    if (N==1){
+        arr=arr.reverse();
+        return arr;
+    }else{
+        --N;
+        return division(left, middle, N);
+    }
+}
+
+//根据序号，寻找比其大一级的序号
