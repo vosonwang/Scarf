@@ -23,7 +23,7 @@ require("../temple/header.html")
                 </thead>
                 <tbody>
                 <template v-for="(index,item) in deliveries | orderBy 'sequence' ">
-                    <tr v-on:click="getId(item)" id="i{{item.id}}">
+                    <tr @click="getId(item,$event)" id="i{{item.id}}">
                         <th class="border text-center change_to_add" ">{{index+1}}</th>
                         <td>{{item.delivery_date}}</td>
                         <td>{{item.pattern}}</td>
@@ -68,8 +68,7 @@ require("../temple/header.html")
     </div>
 
 
-    <!-- Small modal -->
-
+    <!-- 增加行的模态框 -->
     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
          id="addrow_modal">
         <div class="modal-dialog modal-sm">
@@ -81,10 +80,37 @@ require("../temple/header.html")
                 <br>
                 <br>
                 <div class="col-xs-offset-1 col-xs-6">
-                    <input class="insertRows" type="number" v-model="row" placeholder="请输入行数" id="rowno">
+                    <input class="insertRows" type="number" v-model="row" placeholder="请输入行数"  @keyup.enter="addrow()">
                 </div>
                 <div class="col-xs-5">
                     <button type="button" class="btn btn-primary" @click="addrow()">确认</button>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- 删除行的模态框 -->
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+         id="delrow_modal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="col-xs-offset-11 col-xs-1">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <br>
+                <br>
+                <div class="col-xs-offset-1 col-xs-6">
+                    <input class="insertRows" type="number" v-model="row" placeholder="请输入行数"  @keyup.enter="delrow()">
+                </div>
+                <div class="col-xs-5">
+                    <button type="button" class="btn btn-primary" @click="delrow()">确认</button>
                 </div>
                 <br>
                 <br>

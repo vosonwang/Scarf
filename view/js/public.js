@@ -41,7 +41,7 @@ function arrObjProp(id, property, arrObj) {
     return attr;
 }
 
-//根据id计算数组-对象中的其他属性
+//根据id计算数组-对象中的索引
 function arrObjIndex(id, arrObj) {
     var key;
     $.each(arrObj, function (index, value) {
@@ -79,4 +79,4 @@ function division(left, right, N) {
     }
 }
 
-//根据序号，寻找比其大一级的序号
+

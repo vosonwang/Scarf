@@ -84,24 +84,48 @@ $(function () {
                             _self.id=""
                         }
                     })
+                }else {
+                    $('#delrow_modal').modal('show');
                 }
 
             },
 
 
             //这个方法有两个作用:1.提取被点击行的id,从而被delete方法调用,删除行。2.切换被点击行的css样式
-            getId: function (item) {
-                this.id = item.id;    //获取被点击行的id
+            getId: function (item,e) {
 
-                var selector = "#i" + this.id;
-                if ($(selector).hasClass("table_hover")) {      //判断该行,之前是否是已经加上了选中效果
-                    $(selector).removeClass("table_hover getId");
-                    this.delete_arr.remove(this.id);
-                    this.id = "";
-                } else {
-                    $(selector).addClass("table_hover getId");
-                    this.delete_arr.push(this.id);
+                if(e.shiftKey==1)
+                {
+                   if(this.id!=""){
+                       var _new=arrObjIndex(item.id,this.deliveries);
+                       var _old=arrObjIndex(this.id,this.deliveries);
+                       if(_new>_old){
+                           for(var i=0;i<=_new-_old;i++){
+                               var selector = "#i" + this.deliveries[i+_old].id;
+                               $(selector).addClass("table_hover getId");
+                               this.delete_arr.push(this.deliveries[i+_old].id);
+                           }
+                       }else {
+                           for(i=0;i<=_old-_new;i++){
+                               selector = "#i" + this.deliveries[i+_new].id;
+                               $(selector).addClass("table_hover getId");
+                               this.delete_arr.push(this.deliveries[i+_new].id);
+                           }
+                       }
+
+                   }
+                }else {
+                    this.id = item.id;    //获取被点击行的id
+                    selector = "#i" + item.id;
+                    if ($(selector).hasClass("table_hover")) {      //判断该行,之前是否是已经加上了选中效果
+                        $(selector).removeClass("table_hover getId");
+                        this.delete_arr.remove(item.id);
+                    } else {
+                        $(selector).addClass("table_hover getId");
+                        this.delete_arr.push(item.id);
+                    }
                 }
+
 
 
             },
@@ -191,12 +215,5 @@ $(function () {
     });
     /*Vue EDN*/
 
-
-    //160818.4 给输入行数的input框，添加一个回车即等同按下按钮的事件
-    $('#rowno').keydown(function (e) {
-        if (e.keyCode == 13) {
-            vue.addrow();
-        }
-    });
 
 });
