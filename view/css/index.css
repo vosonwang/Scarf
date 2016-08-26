@@ -21,6 +21,8 @@ table {
     text-align: center;
     border-spacing: 0;
     border-collapse: collapse;
+
+
 }
 
 td.border,th.border{
@@ -44,4 +46,16 @@ td,th{
 .table_hover:hover {
     background-color: rgba(49, 64, 82,1) !important;
     color:white;
+}
+
+.unselectable {
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+
+    /*
+      Introduced in IE 10.
+      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
 }

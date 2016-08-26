@@ -84,8 +84,6 @@ $(function () {
                             _self.id=""
                         }
                     })
-                }else {
-                    $('#delrow_modal').modal('show');
                 }
 
             },
@@ -100,17 +98,19 @@ $(function () {
                        var _new=arrObjIndex(item.id,this.deliveries);
                        var _old=arrObjIndex(this.id,this.deliveries);
                        if(_new>_old){
-                           for(var i=0;i<=_new-_old;i++){
+                           for(var i=1;i<=_new-_old;i++){
                                var selector = "#i" + this.deliveries[i+_old].id;
                                $(selector).addClass("table_hover getId");
                                this.delete_arr.push(this.deliveries[i+_old].id);
                            }
+                           this.id=item.id;
                        }else {
-                           for(i=0;i<=_old-_new;i++){
-                               selector = "#i" + this.deliveries[i+_new].id;
+                           for(i=1;i<=_old-_new;i++){
+                               selector = "#i" + this.deliveries[_old-i].id;
                                $(selector).addClass("table_hover getId");
-                               this.delete_arr.push(this.deliveries[i+_new].id);
+                               this.delete_arr.push(this.deliveries[_old-i].id);
                            }
+                           this.id=item.id;
                        }
 
                    }
@@ -174,7 +174,7 @@ $(function () {
                     var left = parseFloat(arrObjProp(_self.id, "sequence", D));    //获取被选中的行在现有发货记录中的序号
                     if (D.length != 0) {
                         var index = arrObjIndex(_self.id, D);       //获取被选中元素在现有发货记录中的索引
-                        if(index==(--D.length)){
+                        if(index==(D.length-1)){
                             var last = D[D.length - 1].sequence;
                             for (var i = 0; i < _self.row; i++) {
                                 N[i].sequence = String(parseFloat(last) + i + 1);

@@ -6,7 +6,7 @@ require("../temple/header.html")
 <div class="container" id="finishing">
     <div class="row">
         <div class="col-xs-12">
-            <table class="table table-striped table-bordered table-hover table-bordersed table-condensed text-center">
+            <table class="table table-striped table-bordered table-hover table-bordersed table-condensed text-center unselectable">
                 <thead>
                 <tr>
                     <th class="text-center border">No</th>
@@ -93,32 +93,6 @@ require("../temple/header.html")
         </div>
     </div>
 
-
-
-    <!-- 删除行的模态框 -->
-    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-         id="delrow_modal">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="col-xs-offset-11 col-xs-1">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <br>
-                <br>
-                <div class="col-xs-offset-1 col-xs-6">
-                    <input class="insertRows" type="number" v-model="row" placeholder="请输入行数"  @keyup.enter="delrow()">
-                </div>
-                <div class="col-xs-5">
-                    <button type="button" class="btn btn-primary" @click="delrow()">确认</button>
-                </div>
-                <br>
-                <br>
-                <br>
-                <br>
-            </div>
-        </div>
-    </div>
 
 </div>
 
