@@ -13,7 +13,7 @@ $url = $_SERVER['PHP_SELF'];
 $name = substr($url, strrpos($url, '/') + 1);
 
 if ($name != 'login.php') {
-    if (!isset($_SESSION['username'])) {
+    if (!isset($_SESSION['login_name'])) {
         echo "<meta http-equiv='Refresh' content='0; url=../view/login.php'>";
         exit;
     } else {
@@ -22,7 +22,7 @@ if ($name != 'login.php') {
         }
     }
 }else{
-    if (isset($_SESSION['username'])) {
+    if (isset($_SESSION['login_name'])) {
         echo "<script>window.location.href='../view/index.php'</script>";
     }
 }

@@ -11,7 +11,7 @@ $(function () {
         methods: {
             login: function () {
                 var _self = this;
-                var un = _self.userinfo.username;
+                var un = _self.userinfo.login_name;
                 var pw = _self.userinfo.password;
 
                 //过滤为空的值

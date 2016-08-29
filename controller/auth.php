@@ -9,18 +9,18 @@ session_start();
 
 require "../database/link.php";
 
-$table='users';
+$table='v_user_detail';
 
-$un = $_POST[username];
+$ln = $_POST[login_name];
 $pw = $_POST[password];
 
-$sql="select userrole,COUNT(*) as isuser from users where username='".$un."' and password='".$pw."'";
+$sql="select role_name,COUNT(*) as isuser from ".$table." where login_name='".$ln."' and password='".$pw."'";
 $row=fetchOne($sql);
 if($row[isuser]==0){
     $arr=[0,"用户名或密码错误"];
 }else{
     $_SESSION['userrole']=$row['userrole'];
-    $_SESSION['username']=$un;
+    $_SESSION['login_name']=$ln;
     $_SESSION['password']=$pw;
     $arr=[1,"window.location.href='../view/index.php'"];
 };
