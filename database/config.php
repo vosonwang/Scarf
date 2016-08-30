@@ -1,6 +1,10 @@
 <?php
-define('DB_HOST', '139.129.214.185');
-define('DB_USER', 'root');
-define('DB_PWD', '6FVCXpAJRv6dFy');
-define('DB_CHARSET', 'UTF8');
-define('DB_DBNAME', 'scarf');
+require '../vendor/medoo.php';
+$database = new medoo([
+    'database_type' => 'mysql',
+    'database_name' => 'scarf',
+    'server' => '139.129.214.185',
+    'username' => 'root',
+    'password' => '6FVCXpAJRv6dFy',
+    'charset' => 'utf8',
+]);
