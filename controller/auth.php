@@ -7,22 +7,30 @@
  */
 session_start();
 
-require "../database/link.php";
+require "../global.php";
+require "vendor/medoo.php";
+require "database/config.php";
+error_reporting(0);
 
-$table='v_user_detail';
 
-$ln = $_POST[login_name];
-$pw = $_POST[password];
+$datas = $database->select("v_user_detail", "*", [
+    "AND" => [
+        "login_name" => $_POST[login_name],
+        "password" => $_POST[password]
+    ]
+]);
 
-$sql="select role_name,COUNT(*) as isuser from ".$table." where login_name='".$ln."' and password='".$pw."'";
-$row=fetchOne($sql);
-if($row[isuser]==0){
-    $arr=[0,"用户名或密码错误"];
-}else{
-    $_SESSION['userrole']=$row['userrole'];
-    $_SESSION['login_name']=$ln;
-    $_SESSION['password']=$pw;
+if($datas){
+    $_SESSION['user_id']=$datas[0][user_id];
+    $_SESSION['user_name']=$datas[0][user_name];
+    $_SESSION['role_name']=$datas[0][role_name];
+    $_SESSION['role_id']=$datas[0][role_id];
+    $_SESSION['login_name']=$datas[0][login_name];
+    $_SESSION['password']=$datas[0][password];
     $arr=[1,"window.location.href='../view/index.php'"];
+}else{
+    $arr=[0,"用户名或密码错误"];
 };
 $msg=json_encode($arr);
 echo $msg;
+/*echo $datas;*/

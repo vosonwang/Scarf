@@ -1,5 +1,5 @@
 /**
- * Created by Voson_2 on 2016/8/29.
+ * Created by Voson on 2016/8/29.
  */
 $(function () {
     var vue = new Vue({
@@ -32,12 +32,13 @@ $(function () {
                     json = JSON.stringify(_self.new_records);
                     $.ajax({
                         type: 'POST',
-                        url: '../controller/insert.php',
+                        url: '../controller/receiving/insert.php',
                         data: {json: json},
                         success: function (msg) {
-                            _self.show();
+                            console.log(msg);
                             $('#new_records').modal('hide');
-                            _self.new_records = [];
+                            _self.show();
+                            _self.new_records = [{}];
                         }
                     });
                 }

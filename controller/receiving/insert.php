@@ -1,25 +1,32 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: voson
- * Date: 2016/8/30
- * Time: 14:33
- */
-require '../../database/config.php';
+
+require "../../global.php";
+require "vendor/medoo.php";
+require "database/config.php";
+session_start();
+error_reporting(0);
 
 $database->action(function($database) {
-    $database->insert("account", [
-        "name" => "foo",
-        "email" => "bar@abc.com"
+    $order_no_id=$database->insert("orders", [
+        "order_no" =>json_decode($_POST[json])[0]->order_no,
     ]);
 
-    $database->delete("account", [
-        "user_id" => 2312
+    $pattern_id=$database->insert("pattern", [
+        "pattern" =>json_decode($_POST[json])[0]->pattern,
+
     ]);
 
-    // If you want to  find something wrong, just return false to rollback the whole transaction.
-    if ($database->has("post", ["user_id" => 2312]))
-    {
-        return false;
-    }
+    $order_pattern_id=$database->insert("order_pattern", [
+        "orders_id"=>$order_no_id,
+        "pattern_id" =>$pattern_id,
+    ]);
+
+    $database->insert("receiving", [
+        "receipt_date" =>json_decode($_POST[json])[0]->receipt_date,
+        "pieces"=>json_decode($_POST[json])[0]->pieces,
+        "trips"=>json_decode($_POST[json])[0]->trips,
+        "users_id"=>$_SESSION['user_id'],
+        "order_pattern_id"=>$order_pattern_id
+    ]);
+
 });
