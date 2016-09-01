@@ -1,5 +1,5 @@
 <?php
-require "../database/config.php";
+require "../database/link.php";
 
 $table='finishing';
 $t=$_POST[json];
