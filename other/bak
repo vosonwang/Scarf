@@ -1,3 +1,26 @@
+0902
+
+ $order_pattern=$database->select("v_receiving",[
+            "orders_id",
+            "pattern_id"
+        ],[
+            "id"=>$i
+        ]);
+
+
+        $del_order_pattern=$database->delete("order_pattern",[
+                    "id"=>$order_pattern_id[0][order_pattern_id]
+                ]);
+
+
+                $del_orders=$database->delete("orders",[
+                    "id"=>$order_pattern[0][orders_id]
+                ]);
+
+
+                $del_pattern=$database->delete("pattern",[
+                    "id"=>$order_pattern[0][pattern_id]
+           ]);
 
 0824
   // 一步定义和注册

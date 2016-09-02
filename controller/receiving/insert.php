@@ -21,12 +21,18 @@ $database->action(function($database) {
         "pattern_id" =>$pattern_id,
     ]);
 
-    $database->insert("receiving", [
+    $receiving_id=$database->insert("receiving", [
         "receipt_date" =>json_decode($_POST[json])[0]->receipt_date,
         "pieces"=>json_decode($_POST[json])[0]->pieces,
         "trips"=>json_decode($_POST[json])[0]->trips,
         "users_id"=>$_SESSION['user_id'],
         "order_pattern_id"=>$order_pattern_id
     ]);
+
+
+    if($order_no_id==false||$pattern_id==false||$order_pattern_id==false||$receiving_id==false){
+        echo "新建失败！";
+        return false;
+    }
 
 });

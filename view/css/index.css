@@ -37,16 +37,11 @@ td,th{
 }
 
 
-.getId{
+.selected,.selected:hover{
     background-color: rgba(49, 64, 82,1) !important;
     color:white;
 }
 
-
-.table_hover:hover {
-    background-color: rgba(49, 64, 82,1) !important;
-    color:white;
-}
 
 .unselectable {
     -moz-user-select: -moz-none;
